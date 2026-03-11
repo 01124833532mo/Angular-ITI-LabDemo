@@ -1,1 +1,87 @@
-<p>student works!</p>
+
+
+<div class="container pb-4">
+
+  <mat-card class="mb-4">
+    <mat-card-header>
+      <mat-card-title>Add New Student</mat-card-title>
+    </mat-card-header>
+
+    <mat-card-content>
+      <div class="row g-3 mt-1 align-items-center">
+
+        <div class="col-md-4">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Student Name</mat-label>
+            <input matInput [(ngModel)]="newStudent.name" placeholder="Enter full name" />
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-2">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Age</mat-label>
+            <input matInput type="number" [(ngModel)]="newStudent.age" />
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-3">
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>Grade</mat-label>
+            <mat-select [(ngModel)]="newStudent.grade">
+              @for (g of grades; track g) {
+                <mat-option [value]="g">{{ g }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
+
+        <div class="col-md-3">
+          <button mat-raised-button color="primary" class="w-100 py-2" (click)="addStudent()">
+            <mat-icon>person_add</mat-icon> Add Student
+          </button>
+        </div>
+
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+  <p-card >
+
+    <div class="mb-3">
+      <input pInputText [(ngModel)]="filterText" placeholder="Search by name." class="w-100" />
+    </div>
+
+    <p-table [value]="filteredStudents" [paginator]="true" [rows]="5"
+             [tableStyle]="{ 'min-width': '100%' }" stripedRows>
+
+      <ng-template pTemplate="header">
+        <tr>
+          <th>id</th>
+          <th>name</th>
+          <th>age</th>
+          <th>grade</th>
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="body" let-student>
+        <tr>
+          <td>{{ student.id }}</td>
+          <td>{{ student.name }}</td>
+          <td>{{ student.age }}</td>
+          <td>
+            <p-tag [value]="student.grade" [severity]="getTagSeverity(student.grade)" />
+          </td>
+        
+        </tr>
+      </ng-template>
+
+      <ng-template pTemplate="emptymessage">
+        <tr>
+          <td colspan="5" class="text-center text-muted py-3">No students found.</td>
+        </tr>
+      </ng-template>
+
+    </p-table>
+  </p-card>
+
+</div>
