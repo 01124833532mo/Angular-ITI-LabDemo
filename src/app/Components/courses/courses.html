@@ -1,0 +1,49 @@
+
+<div class="mb-3 text-center">
+  <label for="categories" class="form-label">Categories</label>
+  <select class="form-select form-select-lg" name="categories" id="categories" [(ngModel)]="selectedCategoryId">
+    <option [ngValue]="-1">all</option>
+    @for (item of Courses; track item.id) {
+      <option [ngValue]="item.id">{{item.categoryName}}</option>
+    }
+  </select>
+</div>
+
+<div class="mb-3 text-center">
+  <label for="courseSearch" class="form-label">Search by course title</label>
+  <input
+    id="courseSearch"
+    type="text"
+    class="form-control form-control-lg"
+    placeholder="Type course title..."
+    [(ngModel)]="courseSearchText"
+  >
+</div>
+
+@let filteredCourses = (Courses | containsFilter:courseSearchText:'title');
+
+<div class="row row-cols-1 row-cols-md-3 g-4 m-5" >
+  @for (item of filteredCourses; track item.id) {
+    @if(selectedCategoryId == -1 || item.catId == selectedCategoryId){
+      <div class="col">
+        <div class="card" [ngClass]="{'text-danger': item.seats==0 , 'bg-warning text-dark':  item.seats <= 5}">
+          <img [src]="item.imgUrl" class="card-img-top" alt="...">
+          <div class="card-body" >
+            <h5 class="card-title">{{item.title |uppercase}}</h5>
+            <p class="card-text">Price is {{item.price |percent}}</p>
+            <p class="card-text">quantity is {{item.instactor | lowercase}}</p>
+
+            <button (click)="decriceseSeats(item)" [disabled]="item.seats==0">Register</button>
+            <p class="card-text">available seats is {{item.seats}}</p>
+            @if(item.seats==0){
+              <p class="card-text text-danger">Course is Full</p>
+            }
+            @else if(item.seats <= 2){
+              <p class="card-text text-warning ">Almost Full</p>
+            }
+          </div>
+        </div>
+      </div>
+    }
+  }
+</div>
