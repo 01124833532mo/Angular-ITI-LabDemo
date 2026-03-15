@@ -1,37 +1,10 @@
-<h2 class="my-5 text-center">Total Price is:{{totalPrice}}</h2>
-    <div class="mb-3 text-center">
-        <label for="" class="form-label">Categories</label>
-        <select
-            class="form-select form-select-lg"
-            name="categories"
-            id=""
-            [(ngModel)]="selectedCategoryId"
-        >
-            <option value="-1">all</option>
-            @for (item of categories; track item.id) {
-            <option [value]="item.id">{{item.name}}</option>
-            }
-
-        </select>
-
-
-</div>
-<div class="row row-cols-1 row-cols-md-3 g-4 m-5">
-  @for (item of showProducts(); track item.id) {
-   <!-- <div [class.d-none]="item.catId!=selectedCategoryId"> -->
-    <div class="col">
-    <div class="card">
-      <img [src]="item.imgUrl" class="card-img-top" alt="...">
-      <div class="card-body" [class.bg-danger]="item.quantity==0">
-        <h5 class="card-title">{{item.name}}</h5>
-        <p class="card-text">Price is {{item.price}}</p>
-        <p class="card-text">quantity is {{item.quantity}}</p>
-        <input type="number" #t1>
-        <button (click)="add(+t1.value,item.price)" [disabled]="item.quantity==0">add</button>
-      </div>
-    </div>
+<div class="card">
+  <img [src]="product.imgUrl" class="card-img-top" alt="...">
+  <div class="card-body" [class.bg-danger]="product.quantity==0">
+    <h5 class="card-title">{{product.name}}</h5>
+    <p class="card-text">Price is {{product.price}}</p>
+    <p class="card-text">quantity is {{product.quantity}}</p>
+    <input type="number" #t1>
+    <button (click)="add(+t1.value)" [disabled]="product.quantity==0">add</button>
   </div>
-
-  <!-- </div> -->
-}
 </div>

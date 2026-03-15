@@ -1,0 +1,8 @@
+<h2 class="my-5 text-center">Total Price is: {{totalPrice}}</h2>
+
+<app-category
+  [categories]="categories"
+  [products]="filteredProducts"
+  (categoryChanged)="onCategoryChanged($event)"
+  (addToCart)="onAddToCart($event)"
+></app-category>

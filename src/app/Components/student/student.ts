@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { StudentData } from '../../Models/Istudent';
+import { StudentService } from '../../_Service/student-service';
 
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
@@ -28,30 +29,25 @@ import { InputTextModule } from 'primeng/inputtext';
   styleUrl: './student.css',
 })
 export class Student {
-  students: StudentData[] = [
-    { id: 1, name: 'Ali Ahmed', age: 20, grade: 'A' },
-    { id: 2, name: 'Sara Hassan', age: 22, grade: 'B' },
-    { id: 3, name: 'Omar Khalid', age: 19, grade: 'C' },
-  ];
+  private studentService = inject(StudentService);
 
   newStudent: StudentData = { id: 0, name: '', age: null, grade: '' };
   filterText = '';
   grades = ['A', 'B', 'C', 'D', 'F'];
-  private nextId = 4;
+
+  get students(): StudentData[] {
+    return this.studentService.getStudents();
+  }
 
   get filteredStudents(): StudentData[] {
-    if (!this.filterText.trim()) return this.students;
-    return this.students.filter(s =>
-      s.name.toLowerCase().includes(this.filterText.toLowerCase())
-    );
+    return this.studentService.getFilteredStudents(this.filterText);
   }
 
   addStudent(): void {
     if (!this.newStudent.name.trim() || !this.newStudent.age || !this.newStudent.grade) return;
-    this.students = [...this.students, { ...this.newStudent, id: this.nextId++ }];
+    this.studentService.addStudent(this.newStudent);
     this.newStudent = { id: 0, name: '', age: null, grade: '' };
   }
-
 
   getTagSeverity(grade: string): 'success' | 'info' | 'warn' | 'danger' {
     if (grade === 'A') return 'success';

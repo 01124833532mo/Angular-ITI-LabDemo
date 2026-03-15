@@ -1,0 +1,21 @@
+<div class="mb-3 text-center">
+  <label class="form-label">Categories</label>
+  <select
+    class="form-select form-select-lg"
+    [(ngModel)]="selectedCategoryId"
+    (ngModelChange)="onCategoryChange()"
+  >
+    <option [value]="-1">all</option>
+    @for (item of categories; track item.id) {
+      <option [value]="item.id">{{item.name}}</option>
+    }
+  </select>
+</div>
+
+<div class="row row-cols-1 row-cols-md-3 g-4 m-5">
+  @for (item of products; track item.id) {
+    <div class="col">
+      <app-products [product]="item" (addToCart)="onAddToCart($event)"></app-products>
+    </div>
+  }
+</div>
