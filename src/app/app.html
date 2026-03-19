@@ -1,4 +1,10 @@
-<app-student></app-student>
+<!-- <app-student></app-student> -->
 <!-- <app-products></app-products> -->
 <!-- <app-courses>  </app-courses> -->
 <!-- <app-order></app-order> -->
+
+<a routerLink="/student" [routerLinkActive]="'bg'" >Student</a>
+<br>
+<a routerLink="/category" [routerLinkActive]="'bg'" >Category</a>
+
+<router-outlet></router-outlet>

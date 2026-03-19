@@ -7,10 +7,11 @@
   >
     <option [value]="-1">all</option>
     @for (item of categories; track item.id) {
-      <option [value]="item.id">{{item.name}}</option>
+      <option [value]="item.id">{{ item.name }}</option>
     }
   </select>
 </div>
+
 
 <div class="row row-cols-1 row-cols-md-3 g-4 m-5">
   @for (item of products; track item.id) {
